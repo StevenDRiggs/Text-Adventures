@@ -1,0 +1,350 @@
+from random import randint
+
+
+class Engine(object):
+
+    scenes = {
+        # Past
+        'ancient': Ancient(),
+        'middle_ages': MiddleAges(),
+        'wwii': WWII(),
+ 
+        # Present
+        'present': Present(),
+
+        # Future
+        'technical_age': TechnicalAge(),
+        'alien_age': AlienAge(),
+        'far_distant': FarDistant()
+    }
+
+    def play(self):
+        pass
+
+    def load_scene(self, scene):
+        Engine.scenes[scene].arrival()
+
+    def end_game(self, end_condition):
+        pass
+
+
+class Character(object):
+
+    def __init__(self):
+        self.health = 100  # percent
+        self.attack = 0
+        self.armor = 0
+
+    def take_damage(self, damage):
+        if self.armor >= damage:
+            self.armor -= damage
+        else:
+            damage -= self.armor
+            self.armor = 0
+            if self.health > damage:
+                self.health -= damage
+            else:
+                self.dead('damage')
+
+    def dead(self, cause):
+        do stuff with cause
+        engine.end_game('death')
+
+    def assault(self, other):
+        other.take_damage(self.attack)
+
+
+class Player(Character):
+
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+        self.sanity = 100  # percent
+        self.satiety = 100  # percent
+        self.restedness = 100  # percent
+        self.armor = 150  # basic time travel gear
+        self.attack = 75  # basic blaster
+
+    def self_check(self):
+        if self.satiety > 100:
+            self.satiety = 100
+
+        if self.satiety <= 0:
+            self.dead('starvation')
+
+        if self.sanity < 0:
+            self.dead('insanity')
+
+        if self.restedness <= 0:
+            self.dead('exhaustion')
+
+
+class Ship(Character):
+
+    def __init__(self, ship_name):
+        super().__init__()
+        self.ship_name = ship_name
+        self.armor = 15000
+        self.supplies = 30  # days
+        self.weapons = 100  # percent
+        self.attack = self.weapons * 150
+
+    def assault(self, other):
+        super().assault(other)
+        self.weapons -= int(self.attack * 0.001) if int(self.attack * 0.001) > 1 else 1
+        if self.weapons < 0:
+            self.weapons = 0
+
+    def travel(self, current_location, destination):
+        <Scene>.departure()
+        distance = destination - current_location
+        <Player>.restedness = 100
+        while distance > 0:
+            distance -= 1000  # ???
+            if <Player>.satiety < 100 and self.supplies > 0:
+                self.supplies -= 1
+                <Player>.satiety += 7
+            <Player>.sanity -= 10
+            <Player>.health += 5
+            <Player>.self_check()
+        <Engine>.load_scene(destination)
+
+
+class Enemy(Character):
+
+    def __init__(self, scene, kind):
+        super().__init__()
+        self.malice = 50  # percent
+
+        base_attack = scene.kinds[kind][0]
+        base_armor = scene.kinds[kind][1]
+
+        self.kind = kind
+
+        self.attack = base_attack + randint(base_attack//-2 + 1, base_attack//2)
+        if self.attack < 0:
+            self.attack = 0
+
+        self.armor = base_armor + randint(base_armor*-2, base_armor*2)
+        if self.armor < 0:
+            self.armor = 0
+
+
+class TerrestrialEnemy(Enemy):
+    def __init__(self, kind)
+        super().__init__(kind)
+        self.malice += randint(-50, 50)
+
+
+class SpaceEnemy(Enemy):
+    def __init__(self, kind):
+        super().__init__(kind)
+        self.malice += randint(0, 50)
+
+
+class TimeEnemy(Enemy):
+    def __init__(self, kind):
+        super().__init__(kind)
+        self.malice = 100
+
+
+class TimeJelly(Enemy):
+
+    def __init__(self):
+        super().__init__('Time Jelly')
+        self.malice = 0
+        self.location = <random Scene>
+
+    def take_damage(self, damage):
+        if self.health > damage:
+            self.health -= damage
+            self.move()
+        else:
+            self.caught()
+
+    def distort(self):
+        <all Scenes>.distortion = randint(1, 5)
+
+    def move(self):
+        self.location = <random scene besides current>
+
+    def caught(self):
+        <Engine>.end_game('toast')
+
+
+class Scene(object):
+
+    def __init__(self):
+        self.distortion = randint(0, 5)
+        self.first_visit = True
+
+    def departure(self):
+        pass
+
+    def arrival(self):
+        if self.first_visit:
+            do first_visit stuff
+            self.first_visit = False
+        else:
+            do distortion stuff
+
+    def fight(self, enemy):
+        if <ship or player>.health > enemy.health:
+            enemy.take_damage(player.attack)
+            player.take_damage(enemy.attack)
+
+        elif enemy.health > <ship or player>.health:
+            player.take_damage(enemy.attack)
+            enemy.take_damage(player.attack)
+
+        else:
+            if randint(1, 2) == 1:
+                enemy.take_damage(player.attack)
+                player.take_damage(enemy.attack)
+            else:
+                player.take_damage(enemy.attack)
+                enemy.take_damage(player.attack)
+
+    def flee(self, destination, enemy):
+        player.health -= 5
+        enemy.health -= 4
+        player.restedness -= 15
+        player.self_check
+        player_slowness = <ship or player>.armor - <ship or player>.health
+        enemy_slowness = enemy.armor - enemy.health
+        if player_slowness < enemy_slowness:
+            self.departure()
+            engine.load_scene(destination)
+        elif player_slowness > enemy_slowness:
+            player.sanity -= 10
+            self.fight(enemy)
+        else:
+            player.sanity -= 5
+            <repeat choice>
+
+
+class Past(Scene):
+    pass
+
+
+class Ancient(Past):
+
+    def __init__(self):
+        self.kinds = {
+            'Ankylosaurus': (700, 200, 25),  # (armor, ship_attack, player_attack)
+            'Tyrannosaurus Rex': (375, 250, 600),
+            'Stegosaurus': (400, 17, 85),
+            'Deinonychus': (200, 5, 100),
+            'Triceratops': (375, 350, 14),
+            'Pachycephalosaurus': (125, 295, 6),
+            'Pteranodon': (215, 170, 15)
+        }
+
+
+class MiddleAges(Past):
+
+    def __init__(self):
+        self.kinds = {
+            'Dragon': (300, 300, 300),
+            'Evil Knight': (250, 1, 125),
+            'Evil Wizard': (16, 7, 1000),
+            'Pikeman': (145, 1700, 80),
+            'Plague Mob': (1300, 1300, 1300),
+            'Giant Rat': (15, 17, 18),
+            'Bugbear': (145, 115, 179)
+        }
+
+
+class WWII(Past):
+
+    def __init____(self):
+        self.kinds = {
+            'Nazi Panzer Brigade': (350, 975, 1500),  # tanks
+            'Nazi Grenadier Brigade': (275, 125, 521),  # armored elite
+            'Nazi Lehr-Brigade': (0, 0, 1000),  # elite attack (tactical)
+            'Italian Rifle Battalion': (75, 75, 75),
+            'Italian A.S. 42 Division': (700, 900, 75),  # strong against ship (anti-air)
+            'Japanese Bomber Squadron': (100, 100, 275),  # strong against player
+            'Japanese Kamikaze Squadron: (0, 1000, 15000)  # suicide bombers, deals attack to self as well
+         }
+
+
+class Present(Scene):
+
+    def __init__(self):
+        self.kinds = {
+            'An Army of Bureaucrats': (12000, 5, 15000),
+            'Kim Kardashian's Legal Team': (2, 0, 12500),
+            'The Red Tape Monster': (7000000, 0, 0),
+            'PETA': (1, 1, 1),
+            'Donald Trump's Hair': (9999, 9999, 9999),
+            'Entitled Millennials': (0, 0, 0),
+            'InstaTwit VineFace ChatrApp': (1000000, 1000000, 1000000)  # sentient social media monster
+        }
+            
+
+
+class TimeStream(Scene):
+
+    def __init__(self):
+        self.kinds = {
+            'Time Twister': (inf, 7000, 7000)  # infinite armor, enormous attack, undefeatable
+            'White Rabbit': (0, 0, 75)  # in a peacoat, no less
+            'Time Sentinel': (15, 15, 15),
+            'Chronodragon': (1500, 1750, 18),
+            'Tick': (1, 1, 1900),
+            'Tock': (1, 1900, 1),
+            'Uhluhtc': (123, 456, 789),
+            'Echo': (1, 1, 1)
+        }
+
+
+class TechnicalAge(Future):
+
+    def __init__(self):
+        self.kinds = {
+            'Whirly-Chopper': (5, 10, 4500),
+            'Smash-o-matic': (1337, 45435, 56),
+            'Burglebot:, (5, 3, 47),
+            'S.U.R.F': (1, 2, 5),  # Super Ultra Robot Frobnicator
+            'Robo-Tank: (5478, 5478, 5),  # heavy armor
+            'B.O.M.B': (0, 3008, 3008),  # Blast-o-matic Omni-directional Massive Boom-maker
+            'B.I.G. B.O.M.B.': (0, 3008618, 3008618)  # Burst Initialized Gravitron B.O.M.B.
+        }
+
+class AlienAge(Future):
+
+    def __init__(self):
+        self.kinds = {
+            'Gray Humanoid': (0, 0),
+            'Green Humanoid': (0, 0),
+            'Something tentacle-y': (0, 0),
+            'Venusians': (0, 0),
+            'Space Blob': (0, 0),
+            'Blob Space': (0, 0),
+            'Probion': (0, 0)
+        }
+
+
+class FarDistant(Future):
+
+    def __init__(self):
+        self.kinds = {
+            'Intellect': (0, 0),
+            'Force': (0, 0),
+            'Emotion': (0, 0),
+            'Mass': (0, 0),
+            'Control': (0, 0),
+            'Voice': (0, 0),
+            'Illusion': (0, 0)
+        }
+
+
+
+if __name__ == '__main__':
+    engine = Engine()
+    name = input("What is your name, brave explorer?\n>> ")
+    player = Player(name)
+    ship_name = input("And what is the name of your ship?\n>> ")
+    ship = Ship(ship_name)
+    engine.play()

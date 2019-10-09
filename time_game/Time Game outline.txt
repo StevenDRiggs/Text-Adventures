@@ -1,0 +1,104 @@
+Time Travel Game:
+
+Engine
+  - start game
+  - load scene
+  - end game
+  - retry
+
+
+Ship/Device
+Player Character
+Enemies?
+
+
+Scenes
+  - Past
+    - Dinosaurs
+    - Middle Ages
+    - WWII
+  - Present
+    - Departure
+    - Arrival
+    - Changes
+  - Future
+    - Changes
+    - Aliens?
+    - Technology
+  - Time Stream
+
+
+Goal: recover Time Jelly
+
+Endings
+  - on toast
+  - lost
+  - stuck
+  - death
+
+
+InstaTwit VineFace ChatrApp
+
+
+Enemy subclasses (non-coded):
+    Ship-Breakers:  # high armor; high damage against ship, low damage against player
+	Ankylosaurus
+	Triceratops
+	*Pachycephalosaurus  (*low armor)
+	Pikeman
+	Italian A.S. 42 Division
+	An Army of Bureaucrats
+	Chronodragon
+	Tock
+	Smash-o-matic
+	Robo-Tank
+	Something tentacle-y
+	Space Blob
+    Player-Killers:  # low armor; low damage against ship, high damage against player
+	Deinonychus
+	*Stegosaurus  (*high armor)
+	*Evil Knight  (*high armor)
+	Evil Wizard
+	*Nazi Grenadier Brigade  (*moderate armor)
+	Nazi Lehr-Brigade
+	Japanese Bomber Squadron
+	Kim Kardashian's Legal Team
+	Entitled Millennials
+	White Rabbit
+	Tick
+	Whirly-Chopper
+	Probion
+    Neutral:  # low to moderate armor and damage against ship and player
+	Pteranodon
+	Giant Rat
+	Bugbear
+	Italian Rifle Battalion
+	The Red Tape Monster
+	PETA
+	Time Sentinel
+	Uhluhtc
+	*Echo  (*mirrors opponent <in reverse?>)
+	Burglebot
+	S.U.R.F.
+	Gray Humanoid
+	Green Humanoid
+	Venusians
+    Devastating:  # high armor and damage against ship and player
+	Tyrannosaurus Rex
+	Dragon
+	Plague Mob
+	Nazi Panzer Brigade
+	Japanese Kamikaze Squadron
+	Donald Trump's Hair
+	InstaTwit VineFace ChatrApp
+	Time Twister
+	B.O.M.B.
+	B.I.G. B.O.M.B.
+	Blob Space
+	Intellect
+	Force
+	Emotion
+	Mass
+	Control
+	Voice
+	Illusion
